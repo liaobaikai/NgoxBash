@@ -4,7 +4,7 @@
 ### Author: liaobaikai<baikai.liao@qq.com>
 ### Script version: 1.2.0
 ### Create time: 2021-01-01
-### Update time: 2020-01-14
+### Update time: 2021-01-14
 ### Required Command: ip, wget, apt-get/yum/dnf
 
 # Download url
@@ -94,7 +94,6 @@ download_mysql_install_file(){
 	fi
 }
 
-# exit 0
 if [ "$MYSQL_DOWNLOAD_URL" != "" ]; then
         mysql_install_file=$(basename $MYSQL_DOWNLOAD_URL)
         # download file
@@ -106,8 +105,6 @@ else
         else
                 mysql_install_file=$INSTALL_DIR/$mysql_install_file
         fi
-
-        # echo $mysql_install_file
 fi
 
 
@@ -261,7 +258,7 @@ preinstall_mysql_conf(){
 	cat >> ${MYSQL_CONFIG_DIR}/my.cnf <<- EOF
 !includedir ${MYSQL_CONFIG_DIR}/conf.d/
 !includedir ${MYSQL_CONFIG_DIR}/mysql.conf.d/
-	EOF
+EOF
         logger "${MYSQL_CONFIG_DIR}/my.cnf created."
 
 	mkdir -p ${MYSQL_CONFIG_DIR}/conf.d/
@@ -274,13 +271,13 @@ preinstall_mysql_conf(){
 quick
 quote-names
 max_allowed_packet	= 16M
-	EOF
+EOF
         logger "${MYSQL_CONFIG_DIR}/conf.d/mysqldump.cnf created."
 
 	cat >> ${MYSQL_CONFIG_DIR}/conf.d/mysql.cnf <<- EOF
 [mysql]
 socket		        =       $MYSQL_DATA_DIR/mysqld.sock
-	EOF
+EOF
         logger "${MYSQL_CONFIG_DIR}/conf.d/mysql.cnf created."
 
 
@@ -349,7 +346,7 @@ skip-name-resolve
 
 tx_isolation            = 'READ COMMITTED'
 
-	EOF
+EOF
         logger "$MYSQLD_CONFIG created."
 
         # delete unknown variable for version 8.0
@@ -486,7 +483,7 @@ install(){
 
         cat > ${MYSQL_HOME}/my.cnf <<- EOF
 !include ${MYSQL_CONFIG_DIR}/my.cnf
-	EOF
+EOF
         logger "$MYSQL_HOME/my.cnf created."
 
         logger "Starting install mysql...version: $mysql_version"
@@ -525,7 +522,7 @@ postinstall(){
 	cat > /etc/profile.d/${SERVICE_NAME}.sh <<- EOF
 MYSQL_HOME=$MYSQL_HOME
 PATH=\$PATH:\$MYSQL_HOME/bin
-	EOF
+EOF
         logger "/etc/profile.d/${SERVICE_NAME}.sh created."
 
 }
